@@ -2,7 +2,7 @@
 const express = require('express');
 const {spawn} = require('child_process');
 const app = express();
-const port = 3000
+// const port = 3000
 //takes the information from module.exports in test.js
 const params = require('./test')
 
@@ -23,4 +23,5 @@ app.get('/', (req, res) => {
     
 
 })
-app.listen(port, () => console.log('example app listening on port ${port}!'))
+// app.listen(port, () => console.log('example app listening on port ${port}!'))
+console.log('testing testing 1 2 3')
