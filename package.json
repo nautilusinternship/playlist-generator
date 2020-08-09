@@ -1,0 +1,30 @@
+{
+  "name": "playlist-generator",
+  "version": "1.0.0",
+  "description": "parses nemobot responses, communicates with ML backend, returns info",
+  "main": "working-pipe.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nautilusinternship/playlist-generator.git"
+  },
+  "keywords": [
+    "nemobot",
+    "chatbot",
+    "spotify",
+    "knn",
+    "playlist"
+  ],
+  "author": "Team Tag",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nautilusinternship/playlist-generator/issues"
+  },
+  "homepage": "https://github.com/nautilusinternship/playlist-generator#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
+  }
+}
