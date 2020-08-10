@@ -11,7 +11,7 @@ testdata = text;
 res.end();
 });
 app.get("/",(req,res)=>{
-console.log(textdata);
+console.log(testdata);
 });
 
 /* var songURI = "Null";
