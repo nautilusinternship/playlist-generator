@@ -35,6 +35,22 @@ app.post("/",(req,res)=>{
     roundNumber = text.split(':')[2];
     console.log(roundNumber);
     res.end();
+    //test
+    console.log("get block entered.");
+    var dataToSend;
+    // spawn new child process to call the python script
+    const python = spawn('python', ['script2.py', genre, roundNumber]); 
+    // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
+    python.stdout.on('data', function (data) {
+        console.log("Pipe data from python script...");
+        dataToSend = data.toString();
+    });
+    // send data to browser
+    python.on('close', (code) => {
+        console.log('child process close all stdio with code ${code}');
+        res.send(dataToSend)
+    });
+    return dataToSend
 });
 console.log("entering get block...");
 app.get('/', (req, res) => {
