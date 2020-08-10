@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
     console.log("get block entered.");
     var dataToSend;
     // spawn new child process to call the python script
-    // params.songLink and params.roundNumber are params that can be called and used to run knn.py
     const python = spawn('python', ['script2.py', genre, roundNumber]); 
     // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
     python.stdout.on('data', function (data) {
@@ -53,6 +52,7 @@ app.get('/', (req, res) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
+    return dataToSend
 }); 
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
