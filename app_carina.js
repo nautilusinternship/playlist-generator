@@ -6,6 +6,20 @@ app.set('port', process.env.PORT || 3000)
 var songURI = "Null";
 var roundNumber = 0;
 
+var songURI = "Null";
+var roundNumber = 0;
+app.post("/NemoText",(req,res)=>{
+    var text = req.body["text"];
+    console.log(text);
+    payload_type = text.split(':')[0];
+    console.log(payload_type);
+    genre = text.split(':')[1];
+    console.log(genre);
+    roundNumber = text.split(':')[2];
+    console.log(roundNumber);
+    res.end();
+})
+
 app.get('/', (req, res) => {
     var dataToSend;
     // spawn new child process to call the python script
