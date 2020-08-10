@@ -6,23 +6,13 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-/* var testdata = "Null";
-app.post("/", (req, res) => {
-    console.log("receiving data...");
-    console.log('body is', req.body);
-    var text = req.body['text'];
-    testdata = text;
-    res.end();
-});
-app.get("/", (req, res) => {
-    console.log(testdata);
-}); */
-
 var songURI = "Null";
 var roundNumber = 0;
 var genre = "Null";
 
 app.post("/",(req,res)=>{
+
+    // PARSE USER INPUT FROM NEMO
     console.log("post block entered.");
     console.log("receiving data...");
     console.log('body is', req.body);
@@ -34,7 +24,8 @@ app.post("/",(req,res)=>{
     console.log(genre);
     roundNumber = text.split(':')[2];
     console.log(roundNumber);
-    //test
+    
+    // MANIPULATE DATA AND SEND BACK TO NEMO
     var dataToSend;
     // spawn new child process to call the python script
     const python = spawn('python', ['script2.py', genre, roundNumber]); 
