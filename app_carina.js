@@ -50,7 +50,8 @@ app.post("/",(req,res)=>{
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
-    return dataToSend
+    console.log(res)
+    return res
 });
 console.log("entering get block...");
 app.get('/', (req, res) => {
