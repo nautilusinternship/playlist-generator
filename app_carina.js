@@ -3,10 +3,18 @@ const {spawn} = require('child_process');
 const app = express();
 app.set('port', process.env.PORT || 3000)
 
-var songURI = "Null";
-var roundNumber = 0;
+var textdata = "Null";
+app.post("/",(req,res)=>{
+var text = req.body["text"];
+testdata = text;
+res.end();
+});
+app.get("/test",(req,res)=>{
+console.log(textdata);
+});
+module.exports = app;
 
-var songURI = "Null";
+/* var songURI = "Null";
 var roundNumber = 0;
 var genre = "empty";
 console.log("entering post block...");
@@ -42,4 +50,4 @@ app.get('/', (req, res) => {
 });
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
-module.exports = app;
+module.exports = app; */
