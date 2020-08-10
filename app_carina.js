@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 
 var songURI = "Null";
 var roundNumber = 0;
-var genre = "empty";
-console.log("entering post block...");
+var genre = "Null";
+
 app.post("/",(req,res)=>{
     console.log("post block entered.");
     console.log("receiving data...");
@@ -35,7 +35,6 @@ app.post("/",(req,res)=>{
     roundNumber = text.split(':')[2];
     console.log(roundNumber);
     //test
-    console.log("get block entered.");
     var dataToSend;
     // spawn new child process to call the python script
     const python = spawn('python', ['script2.py', genre, roundNumber]); 
@@ -46,14 +45,14 @@ app.post("/",(req,res)=>{
     });
     // send data to browser
     python.on('close', (code) => {
-        console.log('child process close all stdio with code ${code}');
+        console.log('child process close all stdio');
         res.send(dataToSend)
         res.data = dataToSend
     });
     console.log(res.data)
     return res
 });
-console.log("entering get block...");
+
 app.get('/', (req, res) => {
     console.log("get block entered.");
     var dataToSend;
@@ -69,6 +68,5 @@ app.get('/', (req, res) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
-    return dataToSend
 }); 
-app.listen(app.get('port'), () => console.log('example app listening on: Port' + app.get('port')))
+app.listen(app.get('port'), () => console.log('example app listening on: port ' + app.get('port')))
