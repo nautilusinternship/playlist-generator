@@ -6,7 +6,7 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-var testdata = "Null";
+/* var testdata = "Null";
 app.post("/", (req, res) => {
     console.log("receiving data...");
     console.log('body is', req.body);
@@ -16,16 +16,18 @@ app.post("/", (req, res) => {
 });
 app.get("/", (req, res) => {
     console.log(testdata);
-});
+}); */
 
-/* var songURI = "Null";
+var songURI = "Null";
 var roundNumber = 0;
 var genre = "empty";
 console.log("entering post block...");
 app.post("/",(req,res)=>{
     console.log("post block entered.");
+    console.log("receiving data...");
+    console.log('body is', req.body);
     var text = req.body["text"];
-    console.log(text);
+    console.log('text is', text);
     payload_type = text.split(':')[0];
     console.log(payload_type);
     genre = text.split(':')[1];
@@ -51,7 +53,6 @@ app.get('/', (req, res) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
-}); */
+}); 
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
-// module.exports = app;
