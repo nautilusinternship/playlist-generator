@@ -1,18 +1,18 @@
 const express = require('express');
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 const app = express();
 app.set('port', process.env.PORT || 3000)
 
-var textdata = "Null";
-app.post("/",(req,res)=>{
+var testdata = "Null";
+app.post("/", (req, res) => {
     console.log("hello??????");
     console.log(req.is('json'));
-var text = req.body["text"];
-testdata = text;
-res.end();
+    var text = req.body["text"];
+    testdata = text;
+    res.end();
 });
-app.get("/",(req,res)=>{
-console.log(testdata);
+app.get("/", (req, res) => {
+    console.log(testdata);
 });
 
 /* var songURI = "Null";
@@ -51,4 +51,4 @@ app.get('/', (req, res) => {
 }); */
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
-module.exports = app;
+// module.exports = app;
