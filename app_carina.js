@@ -8,8 +8,10 @@ var roundNumber = 0;
 
 var songURI = "Null";
 var roundNumber = 0;
-var genre = "empty"
+var genre = "empty";
+console.log("entering post block...");
 app.post("/",(req,res)=>{
+    console.log("post block entered.");
     var text = req.body["text"];
     console.log(text);
     payload_type = text.split(':')[0];
@@ -19,9 +21,10 @@ app.post("/",(req,res)=>{
     roundNumber = text.split(':')[2];
     console.log(roundNumber);
     res.end();
-})
-
+});
+console.log("entering get block...");
 app.get('/', (req, res) => {
+    console.log("get block entered.");
     var dataToSend;
     // spawn new child process to call the python script
     // params.songLink and params.roundNumber are params that can be called and used to run knn.py
@@ -36,8 +39,7 @@ app.get('/', (req, res) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
-    
-
-})
+});
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
+module.exports = app;
