@@ -5,7 +5,7 @@ app.set('port', process.env.PORT || 3000)
 
 var textdata = "Null";
 app.post("/",(req,res)=>{
-    console.log("hello??????")
+    console.log("hello??????");
     console.log(req.is('json'));
 var text = req.body["text"];
 testdata = text;
