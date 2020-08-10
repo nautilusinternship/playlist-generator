@@ -4,14 +4,14 @@ const app = express();
 app.set('port', process.env.PORT || 3000)
 
 var testdata = "Null";
-app.get("/", (req, res) => {
+app.post("/", (req, res) => {
     console.log("hello??????");
     console.log(req.is('json'));
-    var text = req.body["text"];
+    var text = req.body["data"];
     testdata = text;
     res.end();
 });
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
     console.log(testdata);
 });
 
