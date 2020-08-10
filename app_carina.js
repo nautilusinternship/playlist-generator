@@ -9,7 +9,7 @@ var roundNumber = 0;
 var songURI = "Null";
 var roundNumber = 0;
 var genre = "empty"
-app.post("/NemoText",(req,res)=>{
+app.post("/",(req,res)=>{
     var text = req.body["text"];
     console.log(text);
     payload_type = text.split(':')[0];
