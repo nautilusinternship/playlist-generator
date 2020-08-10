@@ -4,13 +4,13 @@ var bodyParser = require('body-parser');
 const app = express();
 app.set('port', process.env.PORT || 3000)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 var testdata = "Null";
 app.post("/", (req, res) => {
-    console.log("hello??????");
-    console.log(req.is('json'));
-    console.log(req.body);
-    var text = req.body["text"];
+    console.log("receiving data...");
+    console.log('body is', req.body);
+    var text = req.body['text'];
     testdata = text;
     res.end();
 });
