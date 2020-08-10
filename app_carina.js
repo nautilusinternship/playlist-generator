@@ -12,7 +12,6 @@ res.end();
 app.get("/test",(req,res)=>{
 console.log(textdata);
 });
-module.exports = app;
 
 /* var songURI = "Null";
 var roundNumber = 0;
@@ -47,7 +46,7 @@ app.get('/', (req, res) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
     });
-});
+}); */
 app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
 console.log('testing testing 1 2 3')
-module.exports = app; */
+module.exports = app;
