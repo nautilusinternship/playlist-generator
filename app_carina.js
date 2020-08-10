@@ -5,11 +5,12 @@ app.set('port', process.env.PORT || 3000)
 
 var textdata = "Null";
 app.post("/",(req,res)=>{
+    console.log("hello??????")
 var text = req.body["text"];
 testdata = text;
 res.end();
 });
-app.get("/test",(req,res)=>{
+app.get("/",(req,res)=>{
 console.log(textdata);
 });
 
