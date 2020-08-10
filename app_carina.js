@@ -1,13 +1,16 @@
 const express = require('express');
 const { spawn } = require('child_process');
+var bodyParser = require('body-parser');
 const app = express();
 app.set('port', process.env.PORT || 3000)
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var testdata = "Null";
 app.post("/", (req, res) => {
     console.log("hello??????");
     console.log(req.is('json'));
-    var text = req.body["data"];
+    console.log(req.body);
+    var text = req.body["text"];
     testdata = text;
     res.end();
 });
