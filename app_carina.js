@@ -34,7 +34,6 @@ app.post("/",(req,res)=>{
     console.log(genre);
     roundNumber = text.split(':')[2];
     console.log(roundNumber);
-    res.end();
     //test
     console.log("get block entered.");
     var dataToSend;
@@ -49,8 +48,9 @@ app.post("/",(req,res)=>{
     python.on('close', (code) => {
         console.log('child process close all stdio with code ${code}');
         res.send(dataToSend)
+        res.data = dataToSend
     });
-    console.log(res)
+    console.log(res.data)
     return res
 });
 console.log("entering get block...");
@@ -71,5 +71,4 @@ app.get('/', (req, res) => {
     });
     return dataToSend
 }); 
-app.listen(app.get('port'), () => console.log('example app listening...' + app.get('port')))
-console.log('testing testing 1 2 3')
+app.listen(app.get('port'), () => console.log('example app listening on: Port' + app.get('port')))
