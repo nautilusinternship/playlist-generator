@@ -50,6 +50,7 @@ def knn(trainingSet, testInstance, k):
     #### End of STEP 3.3
     # classVotes = {}
 
+    # Commented out this part bc we don't need to know what "category" shows up most frequently-- just the best matches
     #### Start of STEP 3.4
     # Calculating the most freq class in the neighbors
     # for x in range(len(neighbors)):
