@@ -18,11 +18,13 @@ app.post("/",(req,res)=>{
     console.log('body is', req.body);
     var text = req.body["text"];
     console.log('text is', text);
-    payload_type = text.split(':')[0];
+    //payload_type = text.split(':')[0];
     console.log(payload_type);
-    genre = text.split(':')[1];
+    // genre = text.split(':')[1];
+    genre = text.split(':')[0];
     console.log(genre);
-    roundNumber = text.split(':')[2];
+    // roundNumber = text.split(':')[2];
+    roundNumber = text.split(':')[1];
     console.log(roundNumber);
 
     // MANIPULATE DATA AND SEND BACK TO NEMO
