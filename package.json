@@ -2,7 +2,7 @@
   "name": "playlist-generator",
   "version": "1.0.0",
   "description": "parses nemobot responses, communicates with ML backend, returns info",
-  "main": "app_carina.js",
+  "main": "app_laura.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
