@@ -36,6 +36,7 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
+	    // the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
@@ -69,6 +70,7 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
+	// the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
@@ -104,6 +106,7 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
+	// the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs.
             // again, replace var assignment with links fetched from backend
