@@ -13,22 +13,22 @@ var genre = "Null";
 app.post("/",(req,res)=>{
 
     // PARSE USER INPUT FROM NEMO
-    console.log("post block entered.");
-    console.log("receiving data...");
-    console.log('body is', req.body);
+    //console.log("post block entered.");
+    //console.log("receiving data...");
+    //console.log('body is', req.body);
     var text = req.body["text"];
-    console.log('text is', text);
+    //console.log('text is', text);
     // payload_type = text.split(':')[0];
     // console.log(payload_type);
-    genre = text.split(':')[0];
-    console.log(genre);
+    genreOrLink = text.split(':')[0];
+    //console.log(genre);
     roundNumber = text.split(':')[1];
-    console.log(roundNumber);
+    //console.log(roundNumber);
 
     // MANIPULATE DATA AND SEND BACK TO NEMO
     var dataToSend;
     // spawn new child process to call the python script
-    const python = spawn('python', ['script2.py', genre, roundNumber]); 
+    const python = spawn('python', ['script2.py', genreOrLink, roundNumber]); 
     // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
     console.log("get block entered.");
     var dataToSend;
     // spawn new child process to call the python script
-    const python = spawn('python', ['script2.py', genre, roundNumber]); 
+    const python = spawn('python', ['script2.py', genreOrLink, roundNumber]); 
     // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
