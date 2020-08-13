@@ -42,8 +42,8 @@ const state = (payload, say, sendButton) => {
         
         // display song previews; user selects preference
         say("Please select one of the following options.").then(() => {
-            say(link1).then(() => {
-                say(link2).then(() => {                            
+            say('https://open.spotify.com/embed/track/'+link1).then(() => {
+                say('https://open.spotify.com/embed/track/'+link2).then(() => {                            
                     // rounds += 1;
                         round++;
                         var str = "Round " + round + ": I like..."
@@ -78,8 +78,8 @@ const state = (payload, say, sendButton) => {
         
         // display song previews; user selects preference
         say("Please select one of the following options.").then(() => {
-            say(link1).then(() => {
-                say(link2).then(() => {                            
+            say('https://open.spotify.com/embed/track/'+link1).then(() => {
+                say('https://open.spotify.com/embed/track/'+link2).then(() => {                            
                     // rounds += 1;
                         round++;
                         var str = "Round " + round + ": I like..."
@@ -109,11 +109,11 @@ const state = (payload, say, sendButton) => {
             say(resp.data);
             // get the returned data here, a new pair of song URLs.
             // again, replace var assignment with links fetched from backend
-            var rec1 = resp.data.split('~')[0];
-            var rec2 = resp.data.split('~')[1];
-            var rec3 = resp.data.split('~')[2];
-            var rec4 = resp.data.split('~')[3];
-            var rec5 = resp.data.split('~')[4];
+            var rec1 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[0];
+            var rec2 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[1];
+            var rec3 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[2];
+            var rec4 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[3];
+            var rec5 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[4];
             say("Here is your recommended mini-playlist!").then(() => {
                 say(rec1 + "\n" + rec2 + "\n" + rec3 + "\n" + rec4 + "\n" + rec5).then(() => {
                     sendButton("Play again?", [{ title: 'Yes', payload: 'Again' }, 'No']);                    })
