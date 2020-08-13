@@ -17,15 +17,16 @@ data = pd.read_csv('audio_data_set.csv')
 args_array = sys.argv[1].split('~VECTOR~')
 front = args_array[0].split('~') # round & uris seen
 round_num = int(front[0]) # round number
-length = len(front)
-uris_seen = front[1:length] # list of uris already seen by user
-uri_pref = uris_seen[0] # uri of song pref'd by user in this round
-tasteVector = list(map(float, args_array[1].split(','))) # current taste vector, to be updated by uri_pref
-
-# print('round: ' + str(round_num))
-# print('uris seen: ' + str(uris_seen))
-# print('uri pref: ' + str(uri_pref))
-# print('current tv: ' + str(tasteVector))
+if (round_num == 0):
+    genre = front[1]
+else:
+    length = len(front)
+    uris_seen = front[1:length] # list of uris already seen by user
+    uri_pref = uris_seen[0] # uri of song pref'd by user in this round
+if (args_array[1] == ''):
+    taste_vector = None
+else:
+    taste_vector = list(map(float, args_array[1].split(','))) # current taste vector, to be updated by uri_pref
 
 # Defining a function which calculates euclidean distance between two data points
 def euclideanDistance(data1, data2, length):
@@ -63,25 +64,7 @@ def knn(trainingSet, testInstance, k):
     for x in range(k):
         neighbors.append(sorted_d[x][0])
     #### End of STEP 3.3
-    # classVotes = {}
-
-    # Commented out this part bc we don't need to know what "category" shows up most frequently-- just the best matches
-    #### Start of STEP 3.4
-    # Calculating the most freq class in the neighbors
-    # for x in range(len(neighbors)):
-    #     response = trainingSet.iloc[neighbors[x]][-1]
-
-    #     if response in classVotes:
-    #         classVotes[response] += 1
-    #     else:
-    #         classVotes[response] = 1
-    # #### End of STEP 3.4
-
-    # #### Start of STEP 3.5
-    # sortedVotes = sorted(classVotes.items(), key=operator.itemgetter(1), reverse=True)
-    # return (sortedVotes[0][0], neighbors)
     return neighbors
-    #### End of STEP 3.5
 
 def find_index(input): 
     o = open('audio_data_set.csv', 'r') 
@@ -92,8 +75,25 @@ def find_index(input):
       if row[0] == input: 
         return index 
       else : index+=1
+
+def get_vector(uri):
+    # create df indexed by uri
+    data_i_uri = pd.read_csv('audio_data_set.csv', index_col='uri')
+    # print(data_i_uri.head(5))
+    try:
+        row = data_i_uri.loc[uri]
+        # print(row)
+        vector = row.values.tolist()
+        return vector
+    except:
+        print('uri does not exist.', file=sys.stderr)
+        return None
+
+
+''' CARINA'S CODE '''
+''' --------------------------------------------------- '''
+
 if (round_num == 0):
-    genre = 'pop'
     num_rows = 10
     # get relevants columns (uri + selected genre)
     uri_gen_df = data[['uri', genre]]
@@ -107,13 +107,24 @@ if (round_num == 0):
     rand_index2 = sample[1]
     rand_row2 = uri_gen_df.iloc[rand_index2]
     uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
+    print(uri_str)
 else:
-    ''' CARINA'S CODE '''
-    ''' --------------------------------------------------- '''
-    # INSERT CODE TO UPDATE TASTE VECTOR
-    tasteVector = [[0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6]]
+    # UPDATE TASTE VECTOR
+    current_pref = get_vector(uri_pref)
+    # print(current_pref)
+    # print(taste_vector)
+    updated_taste_vector = []
+    if taste_vector is None:
+        updated_taste_vector = current_pref
+    else:
+        for (x, y) in zip(current_pref, taste_vector):
+            num = x * (round_num - 1)
+            updated_taste_vector.append((num + y)/(round_num))
+    # taste_vector = [[0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6]]
+    # print(updated_taste_vector)
+    updated_taste_vector = [updated_taste_vector]
     # RUN KNN WITH SPECIFIED K
-    test_df = pd.DataFrame(tasteVector)
+    test_df = pd.DataFrame(updated_taste_vector)
     if (round_num < 5):
         k = (int(round_num) + 1) * 2
     else:
@@ -138,7 +149,10 @@ else:
         payload = '~'.join(uri_list[:5])
     print(payload)
 
+
     ''' --------------------------------------------------- '''
+
+
     """ for x in range(len(sys.argv)):
         # get row number using uri and add all values in the row's other columns to taste vector
         tasteVector = [0] * 13
