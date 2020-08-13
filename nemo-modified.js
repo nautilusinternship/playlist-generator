@@ -15,14 +15,13 @@ const start = (say, sendButton) => {
 const state = (payload, say, sendButton) => {
     if (payload == 'Ready' || payload == 'Again') {
         // just a few sample genres to test with, obvi will add all once done
-        sendButton("Please select a genre:", [{ title: "pop", payload: "pop:0" },
-        { title: "rap", payload: "rap:0" }, { title: "R&B", payload: "rb:0" }]);
+        sendButton("Please select a genre:", [{ title: "pop", payload: "0~pop~VECTOR~" },
+        { title: "rap", payload: "0~rap~VECTOR~" }, { title: "R&B", payload: "0~rb~VECTOR~" }]);
     }
     /* determine if first round (selecting genre) or subsequent rounds (selecting
        between links). */
-    let split = payload.split(':')
-    let genre = split[0];
-    let round = split[split.length - 1];
+    let split = payload.split('~')
+    let round = split[0];
 
     // if first round (selected genre)
     if (round == 0) {
@@ -36,7 +35,6 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
-	    // the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
@@ -51,8 +49,8 @@ const state = (payload, say, sendButton) => {
                         var str = "Round " + round + ": I like..."
                         sendButton(str, [{
                             title: 'Track 1 better',
-                            payload: link1 + ":" + round
-                        }, { title: 'Track 2 better', payload: link2 + ":" + round }]);
+                        payload: round+'~'+link1+'~'+link2+'~VECTOR~'
+                        }, { title: 'Track 2 better', payload: round+'~'+link2+'~'+link1+'~VECTOR~'}]);
                     });
                 });
             });
@@ -70,11 +68,13 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
-	// the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
             var link2 = resp.data.split('~')[1];
+            var data = resp.data.split('~');
+            var oldData = data.splice(0,2);
+            var dataToSend = oldData.join('~');
         
         // display song previews; user selects preference
         say("Please select one of the following options.").then(() => {
@@ -85,8 +85,8 @@ const state = (payload, say, sendButton) => {
                         var str = "Round " + round + ": I like..."
                         sendButton(str, [{
                             title: 'Track 1 better',
-                            payload: link1 + ":" + round
-                        }, { title: 'Track 2 better', payload: link2 + ":" + round }]);
+                            payload: round+'~'+link1+'~'+link2+'~'+dataToSend
+                        }, { title: 'Track 2 better', payload: round+'~'+link2+'~'+link1+'~'+dataToSend}]);
                     });
                 });
             });
@@ -106,7 +106,6 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
-	// the say(resp.data)s throughout the script are just for tracing purposes-- will delete later
             say(resp.data);
             // get the returned data here, a new pair of song URLs.
             // again, replace var assignment with links fetched from backend
