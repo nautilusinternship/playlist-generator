@@ -14,7 +14,7 @@ data = pd.read_csv('audio_data_set.csv')
 
 ''' PARSE COMMAND LINE ARGS '''
 # sys.argv[1] for testing: 1~6nipZlJiUvI0I7lCf1Z7Li~5BBBxfYZuMVGuyh9L0LcVWjzE~VECTOR~0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6
-args_array = sys.argv[1].split('~VECTOR~')
+args_array = sys.argv[0].split('~VECTOR~')
 front = args_array[0].split('~') # round & uris seen
 round_num = int(front[0]) # round number
 if (round_num == 0):
@@ -143,8 +143,10 @@ else:
         else:
             i +=1
     # RETURN STRING OF URIS (PICK TOP 2 OF REMAINING)
-    if (round_num < 5):
+    if (round_num < 2):
         payload = '~'.join(uri_list[:2])
+    elif (round_num < 5):
+        payload = '~'.join(uri_list[:2]) + '~' + '~'.join(uris_seen) + '~VECTOR~' + taste_vector
     else:
         payload = '~'.join(uri_list[:5])
     print(payload)
