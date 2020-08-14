@@ -21,6 +21,7 @@ app.post("/", (req, res) => {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
         res.data = dataToSend
+        console.log(res.data)
     });
     // send data to browser
     /*python.on('close', (code) => {
@@ -28,7 +29,7 @@ app.post("/", (req, res) => {
         res.send(dataToSend)
         res.data = dataToSend
     });*/
-    console.log(res.data)
+    //console.log(res.data)
     // return res
 });
 
