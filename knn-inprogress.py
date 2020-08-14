@@ -89,8 +89,6 @@ def get_vector(uri):
         print('uri does not exist.', file=sys.stderr)
         return None
 
-
-''' CARINA'S CODE '''
 ''' --------------------------------------------------- '''
 
 if (round_num == 0):
@@ -120,11 +118,8 @@ else:
         for (x, y) in zip(current_pref, taste_vector):
             num = x * (round_num - 1)
             updated_taste_vector.append((num + y)/(round_num))
-    # taste_vector = [[0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6]]
-    # print(updated_taste_vector)
-    updated_taste_vector = [updated_taste_vector]
     # RUN KNN WITH SPECIFIED K
-    test_df = pd.DataFrame(updated_taste_vector)
+    test_df = pd.DataFrame([updated_taste_vector])
     if (round_num < 5):
         k = (int(round_num) + 1) * 2
     else:
@@ -146,7 +141,9 @@ else:
     if (round_num < 2):
         payload = '~'.join(uri_list[:2])
     elif (round_num < 5):
-        payload = '~'.join(uri_list[:2]) + '~' + '~'.join(uris_seen) + '~VECTOR~' + taste_vector
+        # convert vector elements to str vals
+        str_tv = [str(val) for val in updated_taste_vector]
+        payload = '~'.join(uri_list[:2]) + '~' + '~'.join(uris_seen) + '~VECTOR~' + ','.join(str_tv)
     else:
         payload = '~'.join(uri_list[:5])
     print(payload)
