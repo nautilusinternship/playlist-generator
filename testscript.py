@@ -26,7 +26,7 @@ else:
 if (round_num == 0):
     num_rows = 10
     print('hi')
-    # get relevants columns (uri + selected genre)
+    """ # get relevants columns (uri + selected genre)
     uri_gen_df = data[['uri', genre]]
     # sort by genre values & select top 10 rows
     uri_gen_df = uri_gen_df.sort_values(by = genre, ascending=False).head(10)
@@ -39,4 +39,4 @@ if (round_num == 0):
     rand_index2 = sample[1]
     rand_row2 = uri_gen_df.iloc[rand_index2]
     uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
-    print('beep~boop')
+    print('beep~boop') """
