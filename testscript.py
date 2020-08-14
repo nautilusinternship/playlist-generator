@@ -1,14 +1,11 @@
 # Importing libraries
-""" import pandas as pd
-import numpy as np
-import math
-import operator
-import random """
+import pandas as pd
+# import random
 import sys
 
 #### Start of STEP 1
 # Importing data
-# data = pd.read_csv('audio_data_set.csv')
+data = pd.read_csv('audio_data_set.csv')
 args_array = sys.argv[1].split('~VECTOR~')
 front = args_array[0].split('~') # round & uris seen
 round_num = int(front[0]) # round number
