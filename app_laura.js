@@ -20,17 +20,15 @@ app.post("/", (req, res) => {
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
-        res.data = dataToSend
-        console.log(res.data)
     });
     // send data to browser
-    /*python.on('close', (code) => {
+    python.stdout.on('end', function(){
         console.log('child process close all stdio');
-        res.send(dataToSend)
-        res.data = dataToSend
-    });*/
-    //console.log(res.data)
-    // return res
+        res.send(dataToSend);
+        res.data = dataToSend;
+    });
+    console.log(res.data);
+    return res;
 });
 
 app.get('/', (req, res) => {
