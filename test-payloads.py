@@ -1,7 +1,7 @@
 # ROUND 0 
 # --> user picks genre
 # --> payload = 0~[genre]~VECTOR~
-payload = '0~pop~VECTOR'
+payload = '0~pop~VECTOR~'
 
 # ROUND 1 
 # --> user picks b/w 2 links
