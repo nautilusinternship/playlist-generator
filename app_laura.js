@@ -22,8 +22,8 @@ app.post("/", (req, res) => {
         dataToSend = data.toString();
     });
     // send data to browser
-    python.on('close', (code) => {
-        console.log('child process close all stdio');
+    python.on('exit', (code) => {
+        console.log('child process close all stdio with code: ' + code);
         res.send(dataToSend)
         res.data = dataToSend
     });
