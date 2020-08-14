@@ -70,16 +70,11 @@ const state = (payload, say, sendButton) => {
         }).then(resp => {
             say(resp.data);
             // get the returned data here, a new pair of song URLs
-            var uris = resp.data.split('~VECTOR~')[0].split('~');
-            var tasteVector = resp.data.split('~VECTOR~')[1];
-            var link1 = uris[0];
-            var link2 = uris[1];
-            var oldData = uris.splice(0, 2);
-            // var link1 = resp.data.split('~')[0];
-            // var link2 = resp.data.split('~')[1];
-            // var data = resp.data.split('~');
-            // var oldData = data.splice(0, 2);
-            var dataToSend = oldData.join('~') + '~VECTOR~' + tasteVector;
+            var link1 = resp.data.split('~')[0];
+            var link2 = resp.data.split('~')[1];
+            var data = resp.data.split('~');
+            var oldData = data.splice(0, 2);
+            var dataToSend = oldData.join('~');
 
             // display song previews; user selects preference
             say("Please select one of the following options.").then(() => {
