@@ -25,11 +25,13 @@ else:
 
 if (round_num == 0):
     num_rows = 10
+    print('hi')
     # get relevants columns (uri + selected genre)
     uri_gen_df = data[['uri', genre]]
     # sort by genre values & select top 10 rows
     uri_gen_df = uri_gen_df.sort_values(by = genre, ascending=False).head(10)
     # get 1st random row 
+    print('hello')
     sample = random.sample(range(0, num_rows), 2)
     rand_index1 = sample[0]
     rand_row1 = uri_gen_df.iloc[rand_index1]
