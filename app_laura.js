@@ -26,9 +26,9 @@ app.post("/", (req, res) => {
         console.log('child process close all stdio with code: ' + code);
         res.send(dataToSend)
         res.data = dataToSend
+        console.log(res.data)
+        return res
     });
-    console.log(res.data)
-    return res
 });
 
 app.get('/', (req, res) => {
