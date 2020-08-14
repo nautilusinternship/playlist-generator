@@ -21,11 +21,11 @@ app.post("/", (req, res) => {
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
+        console.log('testing')
+        res.data = dataToSend
+        console.log(res.data)
+        return res
     });
-    console.log('testing')
-    res.data = dataToSend
-    console.log(res.data)
-    return res
     /* python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
