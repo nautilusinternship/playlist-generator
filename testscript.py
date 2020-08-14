@@ -1,11 +1,11 @@
 # Importing libraries
-import pandas as pd
+#import pandas as pd
 # import random
 import sys
 
 #### Start of STEP 1
 # Importing data
-data = pd.read_csv('audio_data_set.csv')
+#data = pd.read_csv('audio_data_set.csv')
 args_array = sys.argv[1].split('~VECTOR~')
 front = args_array[0].split('~') # round & uris seen
 round_num = int(front[0]) # round number
@@ -22,7 +22,6 @@ else:
 
 if (round_num == 0):
     num_rows = 10
-    print('hi')
     """ # get relevants columns (uri + selected genre)
     uri_gen_df = data[['uri', genre]]
     # sort by genre values & select top 10 rows
@@ -35,5 +34,5 @@ if (round_num == 0):
     # get 2nd random row
     rand_index2 = sample[1]
     rand_row2 = uri_gen_df.iloc[rand_index2]
-    uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
-    print('beep~boop') """
+    uri_str = rand_row1['uri'] + '~' + rand_row2['uri']"""
+    print('beep~boop')

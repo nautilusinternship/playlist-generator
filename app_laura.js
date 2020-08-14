@@ -15,14 +15,14 @@ app.post("/", (req, res) => {
     // MANIPULATE DATA AND SEND BACK TO NEMO
     var dataToSend;
     // spawn new child process to call the python script
-    const python = spawn('python', ['knn-inprogress.py', textdata]);
+    const python = spawn('python', ['testscript.py', textdata]);
     // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
     });
     // send data to browser
-    python.on('exit', (code) => {
+    python.on('close', (code) => {
         console.log('child process close all stdio with code: ' + code);
         res.send(dataToSend)
         res.data = dataToSend
