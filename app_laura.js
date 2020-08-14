@@ -12,6 +12,7 @@ app.post("/", (req, res) => {
     var textdata = "Null";
     var text = req.body["text"];
     textdata = text;
+    console.log(textdata);
     // MANIPULATE DATA AND SEND BACK TO NEMO
     var dataToSend;
     // spawn new child process to call the python script
