@@ -10,36 +10,32 @@ app.post("/", (req, res) => {
 
     // PARSE USER INPUT FROM NEMO
     var textdata = "Null";
-    try {
-        var round = req.body["round"];
-        var vector = req.body["vector"];
-        var uris = req.body["uris"];
-        console.log(round)
-        console.log(vector)
-        console.log(uris)
-    }
-    catch {
-        var text = req.body["text"];
-        textdata = text;
-        // MANIPULATE DATA AND SEND BACK TO NEMO
-        var dataToSend;
-        // spawn new child process to call the python script
-        // console.log('textdata: ' + textdata)
-        const python = spawn('python', ['knn-inprogress.py', textdata]);
-        // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
-        python.stdout.on('data', function (data) {
-            console.log("Pipe data from python script...");
-            dataToSend = data.toString();
-        });
-        // send data to browser
-        python.on('close', (code) => {
-            console.log('child process close all stdio with code: ' + code);
-            res.send(dataToSend)
-            res.data = dataToSend
-            console.log(res.data)
-            return res
-        });
-    }
+    var round = req.body["round"];
+    var vector = req.body["vector"];
+    var uris = req.body["uris"];
+    console.log(round)
+    console.log(vector)
+    console.log(uris)
+    var text = req.body["text"];
+    textdata = text;
+    // MANIPULATE DATA AND SEND BACK TO NEMO
+    var dataToSend;
+    // spawn new child process to call the python script
+    // console.log('textdata: ' + textdata)
+    const python = spawn('python', ['knn-inprogress.py', textdata]);
+    // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
+    python.stdout.on('data', function (data) {
+        console.log("Pipe data from python script...");
+        dataToSend = data.toString();
+    });
+    // send data to browser
+    python.on('close', (code) => {
+        console.log('child process close all stdio with code: ' + code);
+        res.send(dataToSend)
+        res.data = dataToSend
+        console.log(res.data)
+        return res
+    });
 });
 
 app.get('/', (req, res) => {
