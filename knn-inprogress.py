@@ -12,22 +12,6 @@ data = pd.read_csv('audio_data_set.csv')
 #### End of STEP 1
 # print(data.head(5))
 
-''' PARSE COMMAND LINE ARGS '''
-# sys.argv[1] for testing: 1~6nipZlJiUvI0I7lCf1Z7Li~5BBBxfYZuMVGuyh9L0LcVWjzE~VECTOR~0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6
-args_array = sys.argv[1].split('~VECTOR~')
-front = args_array[0].split('~') # round & uris seen
-round_num = int(front[0]) # round number
-if (round_num == 0):
-    genre = front[1]
-else:
-    length = len(front)
-    uris_seen = front[1:length] # list of uris already seen by user
-    uri_pref = uris_seen[0] # uri of song pref'd by user in this round
-if (args_array[1] == ''):
-    taste_vector = None
-else:
-    taste_vector = list(map(float, args_array[1].split(','))) # current taste vector, to be updated by uri_pref
-
 # Defining a function which calculates euclidean distance between two data points
 def euclideanDistance(data1, data2, length):
     distance = 0
@@ -91,63 +75,82 @@ def get_vector(uri):
 
 ''' --------------------------------------------------- '''
 
-if (round_num == 0):
-    num_rows = 10
-    # get relevants columns (uri + selected genre)
-    uri_gen_df = data[['uri', genre]]
-    # sort by genre values & select top 10 rows
-    uri_gen_df = uri_gen_df.sort_values(by = genre, ascending=False).head(10)
-    # get 1st random row 
-    sample = random.sample(range(0, num_rows), 2)
-    rand_index1 = sample[0]
-    rand_row1 = uri_gen_df.iloc[rand_index1]
-    # get 2nd random row
-    rand_index2 = sample[1]
-    rand_row2 = uri_gen_df.iloc[rand_index2]
-    uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
-    print(uri_str)
-else:
-    # UPDATE TASTE VECTOR
-    current_pref = get_vector(uri_pref)
-    # print(current_pref)
-    # print(taste_vector)
-    updated_taste_vector = []
-    if taste_vector is None:
-        updated_taste_vector = current_pref
+def main():
+    ''' PARSE COMMAND LINE ARGS '''
+    # sys.argv[1] for testing: 1~6nipZlJiUvI0I7lCf1Z7Li~5BBBxfYZuMVGuyh9L0LcVWjzE~VECTOR~0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6
+    args_array = sys.argv[1].split('~VECTOR~')
+    front = args_array[0].split('~') # round & uris seen
+    round_num = int(front[0]) # round number
+    if (round_num == 0):
+        genre = front[1]
     else:
-        for (x, y) in zip(current_pref, taste_vector):
-            num = x * (round_num - 1)
-            updated_taste_vector.append((num + y)/(round_num))
-    # RUN KNN WITH SPECIFIED K
-    test_df = pd.DataFrame([updated_taste_vector])
-    if (round_num < 5):
-        k = (int(round_num) + 1) * 2
+        length = len(front)
+        uris_seen = front[1:length] # list of uris already seen by user
+        uri_pref = uris_seen[0] # uri of song pref'd by user in this round
+    if (args_array[1] == ''):
+        taste_vector = None
     else:
-        k = (int(round_num) + 1) * 2 + 3
-    neighbors = knn(data.iloc[:,1:14], test_df, k)
-    uri_list = []
-    for n in neighbors:
-        uri_list.append(data.iloc[n]['uri'])
-    # REMOVE DUPLICATES
-    i = 0
-    while i < len(uri_list):
-        current_uri = uri_list[i]
-        if current_uri in uris_seen:
-            uri_list.remove(current_uri)
-            i -=1 # dec index b/c of removal
-        else:
-            i +=1
-    # RETURN STRING OF URIS (PICK TOP 2 OF REMAINING)
-    if (round_num < 1):
-        payload = '~'.join(uri_list[:2])
-    elif (round_num < 5):
-        # convert vector elements to str vals
-        str_tv = [str(val) for val in updated_taste_vector]
-        payload = '~'.join(uri_list[:2]) + '~' + '~'.join(uris_seen) + '~VECTOR~' + ','.join(str_tv)
-    else:
-        payload = '~'.join(uri_list[:5])
-    print(payload)
+        taste_vector = list(map(float, args_array[1].split(','))) # current taste vector, to be updated by uri_pref
 
+    if (round_num == 0):
+        num_rows = 10
+        # get relevants columns (uri + selected genre)
+        uri_gen_df = data[['uri', genre]]
+        # sort by genre values & select top 10 rows
+        uri_gen_df = uri_gen_df.sort_values(by = genre, ascending=False).head(10)
+        # get 1st random row 
+        sample = random.sample(range(0, num_rows), 2)
+        rand_index1 = sample[0]
+        rand_row1 = uri_gen_df.iloc[rand_index1]
+        # get 2nd random row
+        rand_index2 = sample[1]
+        rand_row2 = uri_gen_df.iloc[rand_index2]
+        uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
+        print(uri_str)
+    else:
+        # UPDATE TASTE VECTOR
+        current_pref = get_vector(uri_pref)
+        # print(current_pref)
+        # print(taste_vector)
+        updated_taste_vector = []
+        if taste_vector is None:
+            updated_taste_vector = current_pref
+        else:
+            for (x, y) in zip(current_pref, taste_vector):
+                num = x * (round_num - 1)
+                updated_taste_vector.append((num + y)/(round_num))
+        # RUN KNN WITH SPECIFIED K
+        test_df = pd.DataFrame([updated_taste_vector])
+        if (round_num < 5):
+            k = (int(round_num) + 1) * 2
+        else:
+            k = (int(round_num) + 1) * 2 + 3
+        neighbors = knn(data.iloc[:,1:14], test_df, k)
+        uri_list = []
+        for n in neighbors:
+            uri_list.append(data.iloc[n]['uri'])
+        # REMOVE DUPLICATES
+        i = 0
+        while i < len(uri_list):
+            current_uri = uri_list[i]
+            if current_uri in uris_seen:
+                uri_list.remove(current_uri)
+                i -=1 # dec index b/c of removal
+            else:
+                i +=1
+        # RETURN STRING OF URIS (PICK TOP 2 OF REMAINING)
+        if (round_num < 1):
+            payload = '~'.join(uri_list[:2])
+        elif (round_num < 5):
+            # convert vector elements to str vals
+            str_tv = [str(val) for val in updated_taste_vector]
+            payload = '~'.join(uri_list[:2]) + '~' + '~'.join(uris_seen) + '~VECTOR~' + ','.join(str_tv)
+        else:
+            payload = '~'.join(uri_list[:5])
+        print(payload)
+
+if __name__ == '__main__':
+    main()
 
     ''' --------------------------------------------------- '''
 
