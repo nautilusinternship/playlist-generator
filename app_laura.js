@@ -13,9 +13,9 @@ app.post("/", (req, res) => {
     var round = req.body["round"];
     var vector = req.body["vector"];
     var uris = req.body["uris"];
-    console.log(round)
-    console.log(vector)
-    console.log(uris)
+    console.log('round: ' + round)
+    console.log('vector: ' + vector)
+    console.log('uris: ' + uris)
     var text = req.body["text"];
     textdata = text;
     // MANIPULATE DATA AND SEND BACK TO NEMO
@@ -33,7 +33,7 @@ app.post("/", (req, res) => {
         console.log('child process close all stdio with code: ' + code);
         res.send(dataToSend)
         res.data = dataToSend
-        console.log(res.data)
+        console.log('data: ' + res.data)
         return res
     });
 });
