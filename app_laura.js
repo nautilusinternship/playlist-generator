@@ -50,11 +50,7 @@ app.get('/', (req, res) => {
     }
     catch {
         // send data to browser
-        dataToSend = 'No data from nemobot at this time.'
-        python.on('close', (code) => {
-            console.log('child process close all stdio with code ${code}');
-            res.send(dataToSend)
-        });
+        document.write('No data from nemobot at this time.')
     }
 });
 app.listen(app.get('port'), () => console.log('example app listening on: port ' + app.get('port')))
