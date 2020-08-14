@@ -25,7 +25,7 @@ app.post("/", (req, res) => {
     console.log('b/w data and close blocks')
     // send data to browser
     python.on('close', (code) => {
-        console.log('child process close all stdio');
+        console.log('child process close all stdio with code' + code);
         res.send(dataToSend)
         res.data = dataToSend
     });
