@@ -138,7 +138,7 @@ else:
         else:
             i +=1
     # RETURN STRING OF URIS (PICK TOP 2 OF REMAINING)
-    if (round_num < 2):
+    if (round_num < 1):
         payload = '~'.join(uri_list[:2])
     elif (round_num < 5):
         # convert vector elements to str vals
