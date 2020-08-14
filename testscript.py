@@ -37,4 +37,4 @@ if (round_num == 0):
     rand_index2 = sample[1]
     rand_row2 = uri_gen_df.iloc[rand_index2]
     uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
-    print(uri_str)
+    print('beep~boop')
