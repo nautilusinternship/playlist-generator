@@ -22,13 +22,13 @@ app.post("/", (req, res) => {
         dataToSend = data.toString();
     });
     // send data to browser
-    python.stdout.on('end', function(){
+    python.on('close', (code) => {
         console.log('child process close all stdio');
-        res.send(dataToSend);
-        res.data = dataToSend;
+        res.send(dataToSend)
+        res.data = dataToSend
     });
-    console.log(res.data);
-    return res;
+    console.log(res.data)
+    return res
 });
 
 app.get('/', (req, res) => {

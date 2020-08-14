@@ -107,6 +107,7 @@ def main():
         rand_row2 = uri_gen_df.iloc[rand_index2]
         uri_str = rand_row1['uri'] + '~' + rand_row2['uri']
         print(uri_str)
+        sys.stdout.flush()
     else:
         # UPDATE TASTE VECTOR
         current_pref = get_vector(uri_pref)
@@ -148,6 +149,7 @@ def main():
         else:
             payload = '~'.join(uri_list[:5])
         print(payload)
+        sys.stdout.flush()
 
 if __name__ == '__main__':
     main()
