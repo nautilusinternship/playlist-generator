@@ -21,9 +21,6 @@ app.post("/", (req, res) => {
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
         dataToSend = data.toString();
-        res.data = dataToSend
-        console.log(res.data)
-        return res
     });
     console.log('b/w data and close blocks')
     // send data to browser
@@ -32,6 +29,8 @@ app.post("/", (req, res) => {
         res.send(dataToSend)
         res.data = dataToSend
     });
+    console.log(res.data)
+    return res
 });
 
 app.get('/', (req, res) => {
