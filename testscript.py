@@ -1,10 +1,18 @@
 import sys
-print(sys.argv[1])
 
-"""def main():
-    ''' PARSE COMMAND LINE ARGS '''
-    # sys.argv[1] for testing: 1~6nipZlJiUvI0I7lCf1Z7Li~5BBBxfYZuMVGuyh9L0LcVWjzE~VECTOR~0,0,0.8,0,0.1,0,0,0,0,0.55,0.8,0,0.6
-    print(sys.argv[1])
+args_array = sys.argv[1].split('~VECTOR~')
+front = args_array[0].split('~') # round & uris seen
+round_num = int(front[0]) # round number
+if (round_num == 0):
+    genre = front[1]
+else:
+    length = len(front)
+    uris_seen = front[1:length] # list of uris already seen by user
+    uri_pref = uris_seen[0] # uri of song pref'd by user in this round
+if (args_array[1] == ''):
+    taste_vector = None
+else:
+    taste_vector = list(map(float, args_array[1].split(','))) # current taste vector, to be updated by uri_pref
 
-if __name__ == '__main__':
-    main()"""
+if (round_num == 0):
+    print('hello~hi')
