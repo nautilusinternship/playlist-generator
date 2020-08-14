@@ -62,10 +62,12 @@ const state = (payload, say, sendButton) => {
         axios({
             method: 'post',
             baseURL: 'https://playlist-generatr.herokuapp.com',
-            url: '/',
+            url: '/test',
             'Content-Type': 'application/json',
             data: {
-                text: payload
+                round: payload.split('~VECTOR~').split('~')[0],
+                vector: payload.split('~VECTOR~')[1],
+                uris: payload.split('~VECTOR~').split('~').splice(0, 1)
             }
         }).then(resp => {
             say(resp.data);
