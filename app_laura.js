@@ -28,7 +28,7 @@ app.post("/", (req, res) => {
         res.data = dataToSend
     });
     console.log(res.data)
-    return res
+    // return res
 });
 
 app.get('/', (req, res) => {
