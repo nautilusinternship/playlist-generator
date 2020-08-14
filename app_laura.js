@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 app.post("/",(req,res)=>{
 
     // PARSE USER INPUT FROM NEMO
+    var textdata = "Null";
     var text = req.body["text"];
     textdata = text;
     // MANIPULATE DATA AND SEND BACK TO NEMO
