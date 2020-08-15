@@ -5,8 +5,7 @@ const axios = require('axios');
 let rounds = 0;
 
 const start = (say, sendButton) => {
-    say("In this game, you will choose your preference from provided songs so\
-	we can help recommend other music you might like :)").then(() => {
+    say("In this game, you will choose your preference from provided songs so we can help recommend other 🎵 music 🎵 you might like ☺️").then(() => {
             sendButton('Are you ready?', [{ title: 'Yes', payload: 'Ready' }, 'No']);
         });
 };
@@ -15,8 +14,16 @@ const start = (say, sendButton) => {
 const state = (payload, say, sendButton) => {
     if (payload == 'Ready' || payload == 'Again') {
         // just a few sample genres to test with, obvi will add all once done
-        sendButton("Please select a genre:", [{ title: "pop", payload: "0~pop~VECTOR~" },
-        { title: "rap", payload: "0~rap~VECTOR~" }, { title: "R&B", payload: "0~rb~VECTOR~" }]);
+        sendButton("Please select a genre:", 
+        [{ title: "pop ✨", payload: "0~pop~VECTOR~" },
+        { title: "rock 🎸", payload: "0~rock~VECTOR~" }, 
+        { title: "R&B 🎧", payload: "0~rb~VECTOR~" },
+        { title: "hip hip 🔥", payload: "0~hh~VECTOR~" },
+        { title: "jazz 🎷", payload: "0~jazz~VECTOR~" },
+        { title: "classical 🎻", payload: "0~classical~VECTOR~" },
+        { title: "dance 🕺", payload: "0~dance~VECTOR~" },
+        { title: "country 🌻", payload: "0~country~VECTOR~" },
+        { title: "EDM ⚡", payload: "0~ed~VECTOR~" }]);
     }
     /* determine if first round (selecting genre) or subsequent rounds (selecting
        between links). */
@@ -59,6 +66,7 @@ const state = (payload, say, sendButton) => {
 
     // if not first round (selecting links)
     if (round > 0 && round < 5) {
+        say(payload)
         axios({
             method: 'post',
             baseURL: 'https://playlist-generatr.herokuapp.com',
@@ -117,8 +125,8 @@ const state = (payload, say, sendButton) => {
             var rec3 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[2];
             var rec4 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[3];
             var rec5 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[4];
-            say("Here is your recommended mini-playlist!").then(() => {
-                say(rec1 + "\n" + rec2 + "\n" + rec3 + "\n" + rec4 + "\n" + rec5).then(() => {
+            say("⭐ Here is your recommended mini-playlist! ⭐").then(() => {
+                say("▶️" + rec1 + "\n▶️" + rec2 + "\n▶️" + rec3 + "\n▶️" + rec4 + "\n▶️" + rec5).then(() => {
                     sendButton("Play again?", [{ title: 'Yes', payload: 'Again' }, 'No']);
                 })
             })
@@ -130,7 +138,7 @@ module.exports = {
     filename: 'helloworld',
     title: 'Hello World SIS',
     introduction: [
-        'Welcome to Nemobot Music Recommender!'
+        'Welcome to Nemobot Music Recommender! 🎧 🎶 📻'
     ],
     start: start,
     state: state

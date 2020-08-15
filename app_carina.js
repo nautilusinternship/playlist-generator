@@ -22,7 +22,7 @@ app.post("/", (req, res) => {
     var dataToSend;
     // spawn new child process to call the python script
     // console.log('textdata: ' + textdata)
-    const python = spawn('python', ['knn-inprogress.py', textdata]);
+    const python = spawn('python', ['knn-test.py', textdata]);
     // collect data from script. Takes whatever is printed from python script knn.py and post on localhost:3000
     python.stdout.on('data', function (data) {
         console.log("Pipe data from python script...");
