@@ -15,15 +15,15 @@ const state = (payload, say, sendButton) => {
     if (payload == 'Ready' || payload == 'Again') {
         // just a few sample genres to test with, obvi will add all once done
         sendButton("Please select a genre:", 
-        [{ title: "pop ✨", payload: "0~pop~VECTOR~" },
-        { title: "rock 🎸", payload: "0~rock~VECTOR~" }, 
-        { title: "R&B 🎧", payload: "0~rb~VECTOR~" },
-        { title: "hip hip 🔥", payload: "0~hh~VECTOR~" },
-        { title: "jazz 🎷", payload: "0~jazz~VECTOR~" },
-        { title: "classical 🎻", payload: "0~classical~VECTOR~" },
-        { title: "dance 🕺", payload: "0~dance~VECTOR~" },
-        { title: "country 🌻", payload: "0~country~VECTOR~" },
-        { title: "EDM ⚡", payload: "0~ed~VECTOR~" }]);
+        [{ title: "pop ✨", payload: "0~pop~"},
+        { title: "rock 🎸", payload: "0~rock" }, 
+        { title: "R&B 🎧", payload: "0~rb" },
+        { title: "hip hip 🔥", payload: "0~hh" },
+        { title: "jazz 🎷", payload: "0~jazz" },
+        { title: "classical 🎻", payload: "0~classical" },
+        { title: "dance 🕺", payload: "0~dance" },
+        { title: "country 🌻", payload: "0~country" },
+        { title: "EDM ⚡", payload: "0~ed" }]);
     }
     /* determine if first round (selecting genre) or subsequent rounds (selecting
        between links). */
@@ -45,7 +45,7 @@ const state = (payload, say, sendButton) => {
             say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
-            var link2 = resp.data.split('~')[1];
+            var link2 = resp.data.split('~')[1].trim();
 
             // display song previews; user selects preference
             say("Please select one of the following options.").then(() => {
@@ -56,8 +56,9 @@ const state = (payload, say, sendButton) => {
                         var str = "Round " + round + ": I like..."
                         sendButton(str, [{
                             title: 'Track 1 better',
-                            payload: round + '~' + link1 + '~' + link2 + '~VECTOR~'
-                        }, { title: 'Track 2 better', payload: round + '~' + link2 + '~' + link1 + '~VECTOR~' }]);
+                            payload: round + '~' + link1 + '~' + link2}, 
+                            { title: 'Track 2 better', 
+                            payload: round + '~' + link2 + '~' + link1}]);
                     });
                 });
             });
