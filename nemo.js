@@ -15,10 +15,10 @@ const state = (payload, say, sendButton) => {
     if (payload == 'Ready' || payload == 'Again') {
         // just a few sample genres to test with, obvi will add all once done
         sendButton("Please select a genre:", 
-        [{ title: "pop ✨", payload: "0~pop~"},
+        [{ title: "pop ✨", payload: "0~pop"},
         { title: "rock 🎸", payload: "0~rock" }, 
         { title: "R&B 🎧", payload: "0~rb" },
-        { title: "hip hip 🔥", payload: "0~hh" },
+        { title: "hip hop 🔥", payload: "0~hh" },
         { title: "jazz 🎷", payload: "0~jazz" },
         { title: "classical 🎻", payload: "0~classical" },
         { title: "dance 🕺", payload: "0~dance" },
@@ -76,8 +76,8 @@ const state = (payload, say, sendButton) => {
             data: {
                 text: payload,
                 round: round,
-                vector: payload.split('~VECTOR~')[1],
-                uris: payload.split('~VECTOR~')[0].split('~').splice(1)
+                vector: payload.split('~')[round*2 + 1],
+                uris: payload.split('~').splice(1, round*2)
             }
         }).then(resp => {
             say(resp.data);
