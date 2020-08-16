@@ -120,6 +120,8 @@ def main():
             for (x, y) in zip(current_pref, taste_vector):
                 num = x * (round_num - 1)
                 updated_taste_vector.append((num + y)/(round_num))
+                #dec = (num + y)/(round_num)
+                #updated_taste_vector.append(round(dec, 3))
         # RUN KNN WITH SPECIFIED K
         test_df = pd.DataFrame([updated_taste_vector])
         if (round_num < 5):
@@ -136,7 +138,7 @@ def main():
             current_uri = uri_list[i]
             if current_uri in uris_seen:
                 uri_list.remove(current_uri)
-                i -=1 # dec index b/c of removal
+                # dec index b/c of removal
             else:
                 i +=1
         # RETURN STRING OF URIS (PICK TOP 2 OF REMAINING)
