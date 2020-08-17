@@ -2,7 +2,6 @@
 const axios = require('axios');
 
 // create counter to track # of song pairs user has picked from
-let rounds = 0;
 
 const start = (say, sendButton) => {
     say("In this game, you will choose your preference from provided songs so we can help recommend other 🎵 music 🎵 you might like ☺️").then(() => {
@@ -42,7 +41,7 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
-            say(resp.data);
+            //say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
             var link2 = resp.data.split('~')[1].trim();
@@ -51,7 +50,6 @@ const state = (payload, say, sendButton) => {
             say("Please select one of the following options.").then(() => {
                 say('https://open.spotify.com/embed/track/' + link1).then(() => {
                     say('https://open.spotify.com/embed/track/' + link2).then(() => {
-                        // rounds += 1;
                         round++;
                         var str = "Round " + round + ": I like..."
                         sendButton(str, [{
@@ -62,12 +60,12 @@ const state = (payload, say, sendButton) => {
                     });
                 });
             });
-        })
+        });
     }
 
     // if not first round (selecting links)
     if (round > 0 && round < 5) {
-        say(payload)
+        //say(payload)
         axios({
             method: 'post',
             baseURL: 'https://playlist-generatr.herokuapp.com',
@@ -80,7 +78,7 @@ const state = (payload, say, sendButton) => {
                 uris: payload.split('~').splice(1, round*2)
             }
         }).then(resp => {
-            say(resp.data);
+            //say(resp.data);
             // get the returned data here, a new pair of song URLs
             var link1 = resp.data.split('~')[0];
             var link2 = resp.data.split('~')[1];
@@ -92,7 +90,6 @@ const state = (payload, say, sendButton) => {
             say("Please select one of the following options.").then(() => {
                 say('https://open.spotify.com/embed/track/' + link1).then(() => {
                     say('https://open.spotify.com/embed/track/' + link2).then(() => {
-                        // rounds += 1;
                         round++;
                         var str = "Round " + round + ": I like..."
                         sendButton(str, [{
@@ -102,7 +99,7 @@ const state = (payload, say, sendButton) => {
                     });
                 });
             });
-        })
+        });
     }
 
     /* after picking preferences, 5 times, return results of kNN on user's 
@@ -118,7 +115,7 @@ const state = (payload, say, sendButton) => {
                 text: payload
             }
         }).then(resp => {
-            say(resp.data);
+            //say(resp.data);
             // get the returned data here, a new pair of song URLs.
             // again, replace var assignment with links fetched from backend
             var rec1 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[0];
@@ -128,16 +125,18 @@ const state = (payload, say, sendButton) => {
             var rec5 = 'https://open.spotify.com/embed/track/' + resp.data.split('~')[4];
             say("⭐ Here is your recommended mini-playlist! ⭐").then(() => {
                 say("▶️" + rec1 + "\n▶️" + rec2 + "\n▶️" + rec3 + "\n▶️" + rec4 + "\n▶️" + rec5).then(() => {
-                    sendButton("Play again?", [{ title: 'Yes', payload: 'Again' }, 'No']);
-                })
-            })
-        })
+                    say("Help us collect more data to improve your music recommendations here: https://audio-tagging.herokuapp.com 🙏").then(() => {
+                        sendButton("Play again?", [{ title: 'Yes', payload: 'Again' }, 'No']);
+                    });
+                });
+            });
+        });
     }
 };
 
 module.exports = {
     filename: 'helloworld',
-    title: 'Hello World SIS',
+    title: 'Music Recommender',
     introduction: [
         'Welcome to Nemobot Music Recommender! 🎧 🎶 📻'
     ],
